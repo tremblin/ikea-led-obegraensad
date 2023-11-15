@@ -299,6 +299,27 @@ void Screen_::drawWeather(int x, int y, int weather, uint8_t brightness)
   this->drawCharacter(x, y, this->readBytes(weatherIcons[weather]), 16, brightness);
 }
 
+void Screen_::test()
+{
+  // screen test
+  int currentBrightness = Screen.getCurrentBrightness();
+  setBrightness(255);
+
+  for (int i = 0; i < ROWS * COLS; i++) {
+      // need to call this with 1, see https://github.com/ph1p/ikea-led-obegraensad/issues/52
+      setPixelAtIndex(i, 255, 1);
+
+      delay(10);
+  }
+
+  for (int i = 0; i < ROWS * COLS; i++) {
+      setPixelAtIndex(i, 0);
+      delay(10);
+  }
+
+  setBrightness(currentBrightness);
+}
+
 Screen_ &Screen_::getInstance()
 {
   static Screen_ instance;

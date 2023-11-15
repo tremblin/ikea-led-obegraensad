@@ -19,12 +19,14 @@
 #include "plugins/CirclePlugin.h"
 #include "plugins/RainPlugin.h"
 #include "plugins/FireworkPlugin.h"
+#include "plugins/GroupPlugin.h"
 
 #ifdef ENABLE_SERVER
 #include "plugins/BigClockPlugin.h"
 #include "plugins/ClockPlugin.h"
 #include "plugins/WeatherPlugin.h"
 #include "plugins/AnimationPlugin.h"
+#include "plugins/HomeAssistantPlugin.h"
 #endif
 
 #include "websocket.h"
@@ -98,6 +100,7 @@ void setup()
 #endif
 
   Screen.setup();
+  Screen.test();
 
   pluginManager.addPlugin(new DrawPlugin());
   pluginManager.addPlugin(new BreakoutPlugin());
@@ -114,6 +117,10 @@ void setup()
   pluginManager.addPlugin(new ClockPlugin());
   pluginManager.addPlugin(new WeatherPlugin());
   pluginManager.addPlugin(new AnimationPlugin());
+  pluginManager.addPlugin(new TemperaturePlugin());
+  pluginManager.addPlugin(new HumidityPlugin());
+
+  pluginManager.addPlugin(new GroupPlugin("mygroup", { new ClockPlugin(), new TemperaturePlugin(), new HumidityPlugin() }, 5000));
 #endif
 
   pluginManager.init();

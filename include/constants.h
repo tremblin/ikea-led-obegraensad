@@ -4,11 +4,11 @@
 #define ENABLE_SERVER
 
 #ifdef ESP32
-#define PIN_ENABLE 26
-#define PIN_DATA 27
+#define PIN_ENABLE 16
+#define PIN_DATA 13
 #define PIN_CLOCK 14
-#define PIN_LATCH 12
-#define PIN_BUTTON 16
+#define PIN_LATCH 0
+#define PIN_BUTTON 2
 #endif
 
 #ifdef ESP8266
@@ -28,15 +28,17 @@
 
 #ifdef ENABLE_SERVER
 // https://github.com/nayarsystems/posix_tz_db/blob/master/zones.json
-#define NTP_SERVER "de.pool.ntp.org"
-#define TZ_INFO "CET-1CEST,M3.5.0,M10.5.0/3"
+#define NTP_SERVER "10.132.0.2"
+#define TZ_INFO "WEST-1DWEST-2,M3.5.0/02:00:00,M10.5.0/03:00:00"
+
+#define HA_URL "http://10.0.1.247:8123"
 #endif
 
 #define COLS 16
 #define ROWS 16
 
 // set your city or coords (https://github.com/chubin/wttr.in)
-#define WEATHER_LOCATION "Hamburg"
+#define WEATHER_LOCATION "Zurich"
 
 
 // ---------------
