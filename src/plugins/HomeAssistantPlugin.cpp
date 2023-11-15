@@ -66,7 +66,7 @@ void TemperaturePlugin::display(float state)
 
   Screen.clear();
   Screen.drawNumbers(3, 2, {(rounded - rounded % 10) / 10, rounded % 10});
-  Screen.drawCharacter(4, 8, Screen.readBytes(celsiusSymbol), 8);
+  Screen.drawCharacter(6, 8, Screen.readBytes(celsiusSymbol), 8);
 }
 
 const char *TemperaturePlugin::getName() const
@@ -84,7 +84,7 @@ void HumidityPlugin::display(float state)
 
   Screen.clear();
   Screen.drawNumbers(3, 2, {(rounded - rounded % 10) / 10, rounded % 10});
-  Screen.drawCharacter(4, 8, Screen.readBytes(percentSymbol), 8);
+  Screen.drawCharacter(6, 8, Screen.readBytes(percentSymbol), 8);
 }
 
 const char *HumidityPlugin::getName() const
