@@ -38,7 +38,7 @@
 #define ROWS 16
 
 // set your city or coords (https://github.com/chubin/wttr.in)
-#define WEATHER_LOCATION "Zurich"
+#define WEATHER_LOCATION "Zurich,Switzerland"
 
 
 // ---------------
