@@ -23,6 +23,7 @@
 
 #ifdef ENABLE_SERVER
 #include "plugins/BigClockPlugin.h"
+#include "plugins/MediumClockPlugin.h"
 #include "plugins/ClockPlugin.h"
 #include "plugins/WeatherPlugin.h"
 #include "plugins/AnimationPlugin.h"
@@ -113,6 +114,7 @@ void setup()
   pluginManager.addPlugin(new FireworkPlugin());
 
 #ifdef ENABLE_SERVER
+  pluginManager.addPlugin(new MediumClockPlugin());
   pluginManager.addPlugin(new BigClockPlugin());
   pluginManager.addPlugin(new ClockPlugin());
   pluginManager.addPlugin(new WeatherPlugin());

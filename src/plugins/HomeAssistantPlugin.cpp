@@ -82,7 +82,7 @@ void TemperaturePlugin::display(std::vector<float> states)
 
   Screen.clear();
   Screen.drawNumbers(3, 2, {(rounded - rounded % 10) / 10, rounded % 10});
-  Screen.drawCharacter(6, 8, Screen.readBytes(celsiusSymbol), 8);
+  Screen.drawCharacter(5, 8, Screen.readBytes(celsiusSymbol), 8);
 }
 
 const char *TemperaturePlugin::getName() const
@@ -100,7 +100,7 @@ void HumidityPlugin::display(std::vector<float> states)
 
   Screen.clear();
   Screen.drawNumbers(3, 2, {(rounded - rounded % 10) / 10, rounded % 10});
-  Screen.drawCharacter(6, 8, Screen.readBytes(percentSymbol), 8);
+  Screen.drawCharacter(5, 8, Screen.readBytes(percentSymbol), 8);
 }
 
 const char *HumidityPlugin::getName() const
@@ -120,11 +120,11 @@ void TemperatureHumidityPlugin::display(std::vector<float> states)
 
   Screen.clear();
   Screen.drawNumbers(0, 2, {(rounded - rounded % 10) / 10, rounded % 10});
-  Screen.drawCharacter(10, 2, Screen.readBytes(celsiusSymbol), 8);
+  Screen.drawCharacter(9, 2, Screen.readBytes(celsiusSymbol), 8);
 
   rounded = round(states[1]);
   Screen.drawNumbers(0, 8, {(rounded - rounded % 10) / 10, rounded % 10});
-  Screen.drawCharacter(10, 8, Screen.readBytes(percentSymbol), 8);
+  Screen.drawCharacter(9, 8, Screen.readBytes(percentSymbol), 8);
 }
 
 const char *TemperatureHumidityPlugin::getName() const

@@ -13,6 +13,8 @@ extern std::vector<int> percentSymbol;
 
 extern std::vector<std::vector<int>> circleAnimation;
 extern std::vector<std::vector<int>> smallNumbers;
+extern std::vector<std::vector<int>> mediumNumbers;
+extern std::vector<std::vector<int>> mediumNumbers2;
 extern std::vector<std::vector<int>> bigNumbers;
 extern std::vector<std::vector<int>> lineAnimation;
 extern std::vector<std::vector<int>> weatherIcons;

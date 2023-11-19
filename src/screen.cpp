@@ -267,7 +267,7 @@ void Screen_::drawNumbers(int x, int y, std::vector<int> numbers, uint8_t bright
 {
   for (int i = 0; i < numbers.size(); i++)
   {
-    this->drawCharacter(x + (i * 5), y, this->readBytes(smallNumbers[numbers.at(i)]), 4, brightness);
+    this->drawCharacter(x + (i * 4), y, this->readBytes(smallNumbers[numbers.at(i)]), 4, brightness);
   }
 }
 
@@ -291,6 +291,14 @@ void Screen_::drawBigNumbers(int x, int y, std::vector<int> numbers, uint8_t bri
   for (int i = 0; i < numbers.size(); i++)
   {
     this->drawCharacter(x + (i * 8), y, this->readBytes(bigNumbers[numbers.at(i)]), 8, brightness);
+  }
+}
+
+void Screen_::drawMediumNumbers(int x, int y, std::vector<int> numbers, uint8_t brightness)
+{
+  for (int i = 0; i < numbers.size(); i++)
+  {
+    this->drawCharacter(x + (i * 7), y, this->readBytes(mediumNumbers2[numbers.at(i)]), 8, brightness);
   }
 }
 
