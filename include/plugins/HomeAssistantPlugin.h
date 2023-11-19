@@ -18,7 +18,6 @@ template <typename T> class HomeAssistantPlugin : public Plugin
 {
 private:
   HTTPClient http;
-  WiFiClient wifiClient;
   unsigned long lastUpdate;
   String url;
   T currentState;

@@ -27,7 +27,13 @@ template <typename T> T HomeAssistantPlugin<T>::getState()
   Serial.print("HomeAssistantPlugin::update(): fetching ");
   Serial.println(url);
 #endif
+#ifdef ESP32
+  http.begin(url);
+#endif
+#ifdef ESP8266
   http.begin(wifiClient, url);
+#endif
+
   http.addHeader("Content-Type", "application/json");
   http.addHeader("Authorization", "Bearer " + String(HA_TOKEN));
   int code = http.GET();
