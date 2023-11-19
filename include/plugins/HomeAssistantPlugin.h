@@ -19,17 +19,17 @@ template <typename T> class HomeAssistantPlugin : public Plugin
 private:
   HTTPClient http;
   unsigned long lastUpdate;
-  String url;
-  T currentState;
+  std::vector<String> uris;
+  std::vector<T> currentStates;
   bool isStateSet = false;
 protected:
-  T getState();
+  std::vector<T> getStates();
   void update();
-  virtual void display(T state) = 0;
+  virtual void display(std::vector<T> states) = 0;
 public:
-  HomeAssistantPlugin(String uri)
+  HomeAssistantPlugin(std::vector<String> uris)
   {
-    this->url = String(HA_URL) + uri;
+    this->uris = uris;
   }
   void setup() override;
   void loop() override;
@@ -38,18 +38,27 @@ public:
 class TemperaturePlugin : public HomeAssistantPlugin<float>
 {
 protected:
-  void display(float state);
+  void display(std::vector<float> states);
 public:
-  TemperaturePlugin() : HomeAssistantPlugin("/api/states/sensor.apartment_temperature") {}
+  TemperaturePlugin() : HomeAssistantPlugin({"/api/states/sensor.apartment_temperature"}) {}
   const char *getName() const override;
 };
 
 class HumidityPlugin : public HomeAssistantPlugin<float>
 {
 protected:
-  void display(float state);
+  void display(std::vector<float> states);
 public:
-  HumidityPlugin() : HomeAssistantPlugin("/api/states/sensor.apartment_humidity") {}
+  HumidityPlugin() : HomeAssistantPlugin({"/api/states/sensor.apartment_humidity"}) {}
+  const char *getName() const override;
+};
+
+class TemperatureHumidityPlugin : public HomeAssistantPlugin<float>
+{
+protected:
+  void display(std::vector<float> states);
+public:
+  TemperatureHumidityPlugin() : HomeAssistantPlugin({"/api/states/sensor.apartment_temperature", "/api/states/sensor.apartment_humidity"}) {}
   const char *getName() const override;
 };
 

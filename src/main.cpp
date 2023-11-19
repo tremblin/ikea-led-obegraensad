@@ -119,8 +119,10 @@ void setup()
   pluginManager.addPlugin(new AnimationPlugin());
   pluginManager.addPlugin(new TemperaturePlugin());
   pluginManager.addPlugin(new HumidityPlugin());
+  pluginManager.addPlugin(new TemperatureHumidityPlugin());
 
   pluginManager.addPlugin(new GroupPlugin("Clock/Temperature/Humidity", { new ClockPlugin(), new TemperaturePlugin(), new HumidityPlugin() }, 5000));
+  pluginManager.addPlugin(new GroupPlugin("Clock/Temperature+Humidity", { new ClockPlugin(), new TemperatureHumidityPlugin() }, 5000));
 #endif
 
   pluginManager.init();
