@@ -78,11 +78,13 @@ void TemperaturePlugin::display(std::vector<float> states)
   Serial.print("TemperaturePlugin::display(): ");
   Serial.println(states[0]);
 #endif
-  int rounded = round(states[0]);
+  float val = trunc(states[0] * 10) / 10;
 
   Screen.clear();
-  Screen.drawNumbers(3, 2, {(rounded - rounded % 10) / 10, rounded % 10});
-  Screen.drawCharacter(5, 8, Screen.readBytes(celsiusSymbol), 8);
+  Screen.drawNumbers(0, 2, {(int)trunc(val / 10), (int)trunc(val) % 10});
+  Screen.drawNumbers(10, 2, {(int)(val * 10) % 10});
+  Screen.drawCharacter(8, 8, Screen.readBytes(celsiusSymbol), 8);
+  Screen.setPixel(9, 6, 1);
 }
 
 const char *TemperaturePlugin::getName() const
@@ -96,11 +98,13 @@ void HumidityPlugin::display(std::vector<float> states)
   Serial.print("HumidityPlugin::display(): ");
   Serial.println(states[0]);
 #endif
-  int rounded = round(states[0]);
+  float val = trunc(states[0] * 10) / 10;
 
   Screen.clear();
-  Screen.drawNumbers(3, 2, {(rounded - rounded % 10) / 10, rounded % 10});
-  Screen.drawCharacter(5, 8, Screen.readBytes(percentSymbol), 8);
+  Screen.drawNumbers(0, 2, {(int)trunc(val / 10), (int)trunc(val) % 10});
+  Screen.drawNumbers(10, 2, {(int)(val * 10) % 10});
+  Screen.drawCharacter(8, 8, Screen.readBytes(percentSymbol), 8);
+  Screen.setPixel(9, 6, 1);
 }
 
 const char *HumidityPlugin::getName() const

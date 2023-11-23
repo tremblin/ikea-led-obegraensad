@@ -9,15 +9,15 @@ void GroupPlugin::setup()
 {
     currentMode = 0;
     lastStart = millis();
-    if (members.size() > 0)
+    for (Plugin* member : members)
     {
-        members.at(currentMode)->setup();
+        member->setup();
     }
 }
 
 void GroupPlugin::loop()
 {
-    if (millis() > (lastStart + interval))
+    if (millis() > (lastStart + interval[currentMode % interval.size()]))
     {
         lastStart = millis();
         currentMode = (currentMode + 1) % members.size();

@@ -7,12 +7,12 @@ class GroupPlugin : public Plugin
 private:
   unsigned long lastStart;
   int currentMode;
-  int interval;
+  std::vector<int> interval;
   std::vector<Plugin*> members;
   const char *name;
 
 public:
-  GroupPlugin(const char* name, std::vector<Plugin*> members = {}, int interval = 5000) : Plugin()
+  GroupPlugin(const char* name, std::vector<Plugin*> members = {}, std::vector<int> interval = {5000}) : Plugin()
   {
     this->name = name;
     this->interval = interval;
