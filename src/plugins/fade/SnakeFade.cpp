@@ -19,4 +19,5 @@ void SnakeFade::run()
             delay(20);
         }
     }
+    Screen.setPixel(lastX, lastY, 0);
 }

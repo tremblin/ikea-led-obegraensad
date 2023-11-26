@@ -29,6 +29,7 @@ void GroupPlugin::loop()
                 if (rnd < cnt)
                 {
                     fade->run();
+                    delay(500);
                     break;
                 }
             }

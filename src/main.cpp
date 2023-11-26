@@ -24,6 +24,8 @@
 #include "fades/NoneFade.h"
 #include "fades/SnakeFade.h"
 #include "fades/RainFade.h"
+#include "fades/HorizontalWashFade.h"
+#include "fades/VerticalWashFade.h"
 
 #ifdef ENABLE_SERVER
 #include "plugins/BigClockPlugin.h"
@@ -131,7 +133,7 @@ void setup()
   pluginManager.addPlugin(new HumidityPlugin());
   pluginManager.addPlugin(new TemperatureHumidityPlugin());
 
-  std::vector<Fade*> fades = { new RainFade(100), new SnakeFade(100), new NoneFade(300) };
+  std::vector<Fade*> fades = { new RainFade(100), new SnakeFade(100), new HorizontalWashFade(100), new VerticalWashFade(100), new NoneFade(300) };
   pluginManager.addPlugin(new GroupPlugin("Clock/Temperature/Humidity", { new ClockPlugin(), new TemperaturePlugin(), new HumidityPlugin() }, { 10000, 5000, 5000 }, fades));
   pluginManager.addPlugin(new GroupPlugin("Clock/Temperature+Humidity", { new ClockPlugin(), new TemperatureHumidityPlugin() }, { 10000, 5000 }, fades));
 #endif
