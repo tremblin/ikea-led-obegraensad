@@ -21,6 +21,10 @@
 #include "plugins/FireworkPlugin.h"
 #include "plugins/GroupPlugin.h"
 
+#include "fades/NoneFade.h"
+#include "fades/SnakeFade.h"
+#include "fades/RainFade.h"
+
 #ifdef ENABLE_SERVER
 #include "plugins/BigClockPlugin.h"
 #include "plugins/MediumClockPlugin.h"
@@ -88,20 +92,24 @@ void setup()
   pinMode(PIN_ENABLE, OUTPUT);
   pinMode(PIN_BUTTON, INPUT_PULLUP);
 
+  Screen.setup();
+
 // server
 #ifdef ENABLE_SERVER
+  Serial.println("Starting Wi-Fi...");
   connectToWiFi();
-
-  // set time server
+  Serial.println("Starting time sync...");
   configTzTime(TZ_INFO, NTP_SERVER);
-
+  Serial.println("Starting OTA...");
   initOTA(server);
+  Serial.println("Starting websocket server...");
   initWebsocketServer(server);
+  Serial.println("Starting web server...");
   initWebServer();
 #endif
 
-  Screen.setup();
-  Screen.test();
+  // drains too much power
+//  Screen.test();
 
   pluginManager.addPlugin(new DrawPlugin());
   pluginManager.addPlugin(new BreakoutPlugin());
@@ -123,8 +131,9 @@ void setup()
   pluginManager.addPlugin(new HumidityPlugin());
   pluginManager.addPlugin(new TemperatureHumidityPlugin());
 
-  pluginManager.addPlugin(new GroupPlugin("Clock/Temperature/Humidity", { new ClockPlugin(), new TemperaturePlugin(), new HumidityPlugin() }, {10000, 5000, 5000}));
-  pluginManager.addPlugin(new GroupPlugin("Clock/Temperature+Humidity", { new ClockPlugin(), new TemperatureHumidityPlugin() }, {10000, 5000}));
+  std::vector<Fade*> fades = { new RainFade(100), new SnakeFade(100), new NoneFade(300) };
+  pluginManager.addPlugin(new GroupPlugin("Clock/Temperature/Humidity", { new ClockPlugin(), new TemperaturePlugin(), new HumidityPlugin() }, { 10000, 5000, 5000 }, fades));
+  pluginManager.addPlugin(new GroupPlugin("Clock/Temperature+Humidity", { new ClockPlugin(), new TemperatureHumidityPlugin() }, { 10000, 5000 }, fades));
 #endif
 
   pluginManager.init();

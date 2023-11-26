@@ -30,7 +30,7 @@ template <typename T> std::vector<T> HomeAssistantPlugin<T>::getStates()
   for (String uri : uris)
   {
 #ifdef DEBUG
-  Serial.println(String(HA_URL) + uri);
+    Serial.println(String(HA_URL) + uri);
 #endif
 #ifdef ESP32
     http.begin(String(HA_URL) + uri);
@@ -46,7 +46,7 @@ template <typename T> std::vector<T> HomeAssistantPlugin<T>::getStates()
     if (code == HTTP_CODE_OK)
     {
 #ifdef DEBUG
-      Serial.println("HomeAssistantPlugin::update(): 200");
+      Serial.println("HomeAssistantPlugin::update(): http result 200");
 #endif
       DynamicJsonDocument doc(2048);
       deserializeJson(doc, http.getString());
@@ -55,6 +55,10 @@ template <typename T> std::vector<T> HomeAssistantPlugin<T>::getStates()
     }
     else
     {
+#ifdef DEBUG
+      Serial.print("HomeAssistantPlugin::update(): http result ");
+      Serial.println(code);
+#endif
       ret.push_back(0);
     }
   }

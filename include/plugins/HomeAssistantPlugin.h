@@ -27,10 +27,7 @@ protected:
   void update();
   virtual void display(std::vector<T> states) = 0;
 public:
-  HomeAssistantPlugin(std::vector<String> uris)
-  {
-    this->uris = uris;
-  }
+  HomeAssistantPlugin(std::vector<String> uris) : uris(uris) {}
   void setup() override;
   void loop() override;
 };
