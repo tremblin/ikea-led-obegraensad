@@ -51,6 +51,10 @@ SYSTEM_STATUS currentStatus = NONE;
 unsigned long lastConnectionAttempt = 0;
 const unsigned long connectionInterval = 10000;
 
+#ifdef ENABLE_DIMMING
+static std::vector<u_int8_t> dimming = DIMMING;
+#endif
+
 void connectToWiFi()
 {
   Serial.println("Connecting to Wi-Fi...");
@@ -153,6 +157,13 @@ void loop()
 
 #ifdef ENABLE_SERVER
   cleanUpClients();
+
+#ifdef ENABLE_DIMMING
+  struct tm timeinfo;
+
+  if (getLocalTime(&timeinfo))
+    Screen.setBrightness(dimming.at(timeinfo.tm_hour));
+#endif
 #endif
   delay(1);
 }

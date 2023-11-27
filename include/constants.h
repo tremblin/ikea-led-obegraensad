@@ -40,6 +40,9 @@
 // set your city or coords (https://github.com/chubin/wttr.in)
 #define WEATHER_LOCATION "Zurich,Switzerland"
 
+#define ENABLE_DIMMING
+// define dimming table (brightness per hour)
+#define DIMMING {80, 50, 50, 50, 50, 50, 80, 150, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 200, 100}
 
 // ---------------
 
