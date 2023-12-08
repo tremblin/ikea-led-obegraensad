@@ -20,6 +20,7 @@
 #include "plugins/RainPlugin.h"
 #include "plugins/FireworkPlugin.h"
 #include "plugins/GroupPlugin.h"
+#include "plugins/TestPlugin.h"
 
 #include "fades/NoneFade.h"
 #include "fades/SnakeFade.h"
@@ -126,6 +127,7 @@ void setup()
   pluginManager.addPlugin(new CirclePlugin());
   pluginManager.addPlugin(new RainPlugin());
   pluginManager.addPlugin(new FireworkPlugin());
+  pluginManager.addPlugin(new TestPlugin());
 
 #ifdef ENABLE_SERVER
   pluginManager.addPlugin(new MediumClockPlugin());
