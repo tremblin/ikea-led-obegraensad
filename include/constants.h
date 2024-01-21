@@ -40,6 +40,17 @@
 // set your city or coords (https://github.com/chubin/wttr.in)
 #define WEATHER_LOCATION "Zurich,Switzerland"
 
+// name of WiFi created by the device if no known WiFi is available
+#define WIFI_MANAGER_SSID "Ikea Display Setup WiFi"
+
+// use ALL of the following to use static IP config
+/*
+#define IP_ADDRESS "192.168.0.250"
+#define SUBNET "255.255.255.0"
+#define DNS1 "1.1.1.1"
+#define DNS2 "8.8.8.8"
+#define GWY "192.168.0.1"
+*/
 #define ENABLE_DIMMING
 // define dimming table (brightness per hour)
 #define DIMMING {80, 50, 50, 50, 50, 50, 80, 150, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 200, 100}

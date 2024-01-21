@@ -1,24 +1,25 @@
 #include <Arduino.h>
 #include <SPI.h>
 
+#ifdef ESP32
+#include <ESPmDNS.h>
+#endif
 #ifdef ESP8266
 #include <ESP8266WiFi.h>
-#endif
-#ifdef ESP32
-#include <WiFi.h>
 #endif
 
 #include "PluginManager.h"
 
-#include "plugins/DrawPlugin.h"
 #include "plugins/BreakoutPlugin.h"
-#include "plugins/SnakePlugin.h"
-#include "plugins/GameOfLifePlugin.h"
-#include "plugins/StarsPlugin.h"
-#include "plugins/LinesPlugin.h"
 #include "plugins/CirclePlugin.h"
-#include "plugins/RainPlugin.h"
+#include "plugins/DrawPlugin.h"
 #include "plugins/FireworkPlugin.h"
+#include "plugins/GameOfLifePlugin.h"
+#include "plugins/LinesPlugin.h"
+#include "plugins/RainPlugin.h"
+#include "plugins/SnakePlugin.h"
+#include "plugins/StarsPlugin.h"
+#include "plugins/PongClockPlugin.h"
 #include "plugins/GroupPlugin.h"
 #include "plugins/TestPlugin.h"
 
@@ -29,19 +30,22 @@
 #include "fades/VerticalWashFade.h"
 
 #ifdef ENABLE_SERVER
+#include "plugins/AnimationPlugin.h"
 #include "plugins/BigClockPlugin.h"
 #include "plugins/MediumClockPlugin.h"
 #include "plugins/ClockPlugin.h"
 #include "plugins/WeatherPlugin.h"
 #include "plugins/AnimationPlugin.h"
+#include "plugins/TickingClockPlugin.h"
 #include "plugins/HomeAssistantPlugin.h"
 #endif
 
-#include "websocket.h"
-#include "secrets.h"
+#include "asyncwebserver.h"
 #include "ota.h"
-#include "webserver.h"
 #include "screen.h"
+#include "secrets.h"
+#include "websocket.h"
+#include "messages.h"
 
 unsigned long previousMillis = 0;
 unsigned long interval = 30000;
@@ -56,6 +60,7 @@ const unsigned long connectionInterval = 10000;
 static std::vector<u_int8_t> dimming = DIMMING;
 #endif
 
+#ifdef ESP32
 void connectToWiFi()
 {
   Serial.println("Connecting to Wi-Fi...");
@@ -88,6 +93,62 @@ void connectToWiFi()
 
   lastConnectionAttempt = millis();
 }
+#endif
+
+#ifdef ESP8266
+void connectToWiFi()
+{
+  Serial.println("Connecting to Wi-Fi...");
+
+  // Delete old config
+  WiFi.disconnect(true);
+
+#if defined(IP_ADDRESS) && defined(GWY) && defined(SUBNET) && defined(DNS1) && \
+    defined(DNS2)
+  auto ip = IPAddress();
+  ip.fromString(IP_ADDRESS);
+
+  auto gwy = IPAddress();
+  gwy.fromString(GWY);
+
+  auto subnet = IPAddress();
+  subnet.fromString(SUBNET);
+
+  auto dns1 = IPAddress();
+  dns1.fromString(DNS1);
+
+  auto dns2 = IPAddress();
+  dns2.fromString(DNS2);
+
+  WiFi.config(ip, gwy, subnet, dns1, dns2);
+#endif
+
+  WiFi.setHostname(WIFI_HOSTNAME);
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+
+  // Wait for connection
+  int attempts = 0;
+  while (WiFi.status() != WL_CONNECTED && attempts < 20)
+  {
+    delay(500);
+    Serial.print(".");
+    attempts++;
+  }
+
+  // Check connection result
+  if (WiFi.status() == WL_CONNECTED)
+  {
+    Serial.print("Connected to WiFi network with IP Address: ");
+    Serial.println(WiFi.localIP());
+  }
+  else
+  {
+    Serial.println("\nFailed to connect to Wi-Fi. Please check credentials.");
+  }
+
+  lastConnectionAttempt = millis();
+}
+#endif
 
 void setup()
 {
@@ -127,6 +188,7 @@ void setup()
   pluginManager.addPlugin(new CirclePlugin());
   pluginManager.addPlugin(new RainPlugin());
   pluginManager.addPlugin(new FireworkPlugin());
+  pluginManager.addPlugin(new PongClockPlugin());
   pluginManager.addPlugin(new TestPlugin());
 
 #ifdef ENABLE_SERVER
@@ -135,6 +197,7 @@ void setup()
   pluginManager.addPlugin(new ClockPlugin());
   pluginManager.addPlugin(new WeatherPlugin());
   pluginManager.addPlugin(new AnimationPlugin());
+  pluginManager.addPlugin(new TickingClockPlugin());
   pluginManager.addPlugin(new TemperaturePlugin());
   pluginManager.addPlugin(new HumidityPlugin());
   pluginManager.addPlugin(new TemperatureHumidityPlugin());
@@ -149,6 +212,9 @@ void setup()
 
 void loop()
 {
+
+  Messages.scrollMessageEveryMinute();
+
   pluginManager.runActivePlugin();
 
   if (WiFi.status() != WL_CONNECTED && millis() - lastConnectionAttempt > connectionInterval)
