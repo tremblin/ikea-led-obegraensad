@@ -123,6 +123,11 @@ void Screen_::setPixel(uint8_t x, uint8_t y, uint8_t value, uint8_t brightness)
   }
 }
 
+uint8_t Screen_::getPixel(uint8_t x, uint8_t y)
+{
+  return (x >= 0 && y >= 0 && x < COLS && y < ROWS) ? this->renderBuffer_[y * 16 + x] : 0;
+}
+
 void IRAM_ATTR Screen_::onScreenTimer()
 {
   Screen._render();
