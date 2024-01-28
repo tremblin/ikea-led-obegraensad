@@ -22,6 +22,7 @@
 #include "plugins/PongClockPlugin.h"
 #include "plugins/GroupPlugin.h"
 #include "plugins/TestPlugin.h"
+#include "plugins/ClearPlugin.h"
 
 #include "fades/NoneFade.h"
 #include "fades/SnakeFade.h"
@@ -191,6 +192,7 @@ void setup()
   pluginManager.addPlugin(new FireworkPlugin());
   pluginManager.addPlugin(new PongClockPlugin());
   pluginManager.addPlugin(new TestPlugin());
+  pluginManager.addPlugin(new ClearPlugin());
 
 #ifdef ENABLE_SERVER
   pluginManager.addPlugin(new MediumClockPlugin());
