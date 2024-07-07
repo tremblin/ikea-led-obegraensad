@@ -30,6 +30,8 @@
 #include "fades/HorizontalWashFade.h"
 #include "fades/VerticalWashFade.h"
 #include "fades/CrashFade.h"
+#include "fades/SplashFade.h"
+#include "fades/DropFade.h"
 
 #ifdef ENABLE_SERVER
 #include "plugins/AnimationPlugin.h"
@@ -205,7 +207,7 @@ void setup()
   pluginManager.addPlugin(new HumidityPlugin());
   pluginManager.addPlugin(new TemperatureHumidityPlugin());
 
-  std::vector<Fade*> fades = { new RainFade(100), new SnakeFade(100), new HorizontalWashFade(100), new CrashFade(100), new VerticalWashFade(100), new NoneFade(300) };
+  std::vector<Fade*> fades = { new SplashFade(100), new DropFade(300), new SnakeFade(100), new HorizontalWashFade(100), new CrashFade(100), new VerticalWashFade(100), new NoneFade(300) };
   pluginManager.addPlugin(new GroupPlugin("Clock/Temperature/Humidity", { new ClockPlugin(), new TemperaturePlugin(), new HumidityPlugin() }, { 10000, 5000, 5000 }, fades));
   pluginManager.addPlugin(new GroupPlugin("Clock/Temperature+Humidity", { new ClockPlugin(), new TemperatureHumidityPlugin() }, { 10000, 5000 }, fades));
   pluginManager.addPlugin(new GroupPlugin("MediumClock/Temperature/Humidity", { new MediumClockPlugin(), new TemperaturePlugin(), new HumidityPlugin() }, { 10000, 5000, 5000 }, { new CrashFade(300) }));
