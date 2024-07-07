@@ -11,14 +11,19 @@ private:
   std::vector<float> acceleration;
   float delay;
   uint8_t brightness;
-  time_t start;
+  uint64_t start;
 
   void setPixel(uint8_t brightness);
+
+  static uint64_t getMillis()
+  {
+    return millis();
+  }
 
 public:
   MovingPixel(std::vector<float> p, std::vector<float> s = {}, std::vector<float> a = {}, uint8_t b = 255, float d = 0) : position(p), speed(s), acceleration(a), brightness(b), delay(d)
   {
-    time(&start);
+    start = getMillis();
   }
   void clear();
   void draw();

@@ -9,9 +9,8 @@ bool MovingPixel::step()
     // start time reached?
     if (delay > 0)
     {
-        time_t current;
-        time(&current);
-        double diff = difftime(current, start);
+        uint64_t current = getMillis();
+        float diff = (float(current) - float(start)) / 1000;
 
         if (delay > diff)
             return true;

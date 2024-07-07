@@ -5,7 +5,7 @@
 
 #define MAX_V 32
 #define MAX_A 0.3f
-#define DELAY 0.5
+#define DELAY 0.3
 
 void DropFade::run()
 {
